@@ -144,7 +144,20 @@ router.get("/products/:slug", async (req, res) => {
 
 router.get('/genre/:genre',async (req,res) => {
   try {
-    const genre = await Product.find({genre :req.params.genre});
+    let sort = req.query.sort || "rating";
+
+    req.query.sort ? (sort = req.query.sort.split(",")) :(sort= [sort]);
+
+    let sortBy  = {};
+
+    if(sort[1]){
+      sortBy[sort[0]] = sort[1];
+    }else{
+      sortBy[sort[0]] = "asc";
+    }
+    const genre = await Product.find({genre :req.params.genre})
+      .sort(sortBy)
+    ;
     if(!genre){
       return res.status(404).json({message:"Genre Not Found"});
     }
@@ -154,6 +167,8 @@ router.get('/genre/:genre',async (req,res) => {
   }
 });
 
+
+//  to view all products 
 
 
 module.exports  = router;
