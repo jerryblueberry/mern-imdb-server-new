@@ -47,7 +47,7 @@ router.get("/options",async(req,res) =>  {
 
     try {
       const page = parseInt(req.query.page) - 1 || 0;
-      const limit = parseInt(req.query.limit) || 9;
+      const limit = parseInt(req.query.limit) || 99;
       const search = req.query.search || "";
       let sort = req.query.sort || "rating";
       let genre = req.query.genre || "All";
